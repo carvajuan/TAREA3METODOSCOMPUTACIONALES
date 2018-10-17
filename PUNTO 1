@@ -1,1 +1,59 @@
 import numpy as np
+import matplotlib.pylab as plt
+
+
+n = 128 # number of point in the whole interval
+f = 200.0 #  frequency in Hz
+dt = 1 / (f * 32 ) #32 samples per unit frequency
+t = np.linspace( 0, (n-1)*dt, n)
+
+y = np.cos(2.0 * np.pi * f * t) - 0.4 * np.sin(2 * np.pi * (2.0*f) * t )
+
+
+plt.plot(t,y)
+#plt.savefig("coseno.png")
+plt.show()
+plt.clf()
+
+def fourier(y, dt):
+    
+    N=float(len(y))
+    
+    G=np.zeros(len(y))
+    
+    sub_frecuencia=np.zeros(len(y))
+    
+    for n in range (0, len(y)):
+        
+        suma_temporal=np.zeros(len(y)-1)
+        
+        n_1=float(n)
+        
+        sub_frecuencia[n]=(n_1/N)
+        
+        for k in range (0, len(y)-1):
+            
+            distribucion=np.cos(2*np.pi*k*(n_1/N))-np.sin(2*np.pi*k*(n_1/N))
+            
+            suma_temporal[k]=(y[k]*distribucion)
+            
+        G[n]=(np.sum(suma_temporal))
+        
+    fa=1.0/dt
+    
+    w = np.linspace(0.0, fa, len(G))
+    
+    return G, w
+
+
+transformada, frecuencias = fourier(y, dt)
+plt.plot(frecuencias, np.abs(transformada))
+plt.show()
+
+# Lo siguiente es para verificar que su codigo este bien:
+from scipy.fftpack import fft, fftfreq
+fft_x = fft(y) / n # FFT Normalized
+freq = fftfreq(n, dt) # Recuperamos las frecuencias
+print(freq)
+plt.plot(freq,abs(fft_x))
+plt.show()
