@@ -137,4 +137,4 @@ plt.grid()
 plt.legend()
 #plt.savefig("CarvajalJuan_TF_interpola.pdf")
 plt.show()
-
+print("Mientras mayor sea el grado de la regresion que se haga en los datos incompletos su transformada se acercara mas a la de los datos signal")
