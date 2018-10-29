@@ -8,8 +8,6 @@ temp1=open("incompletos.dat","r")
 file=open("signal.dat","r")
 file1=open("incompletos.dat","r")
 
-
-
 tamaño_signal=0
 for linea in temp:
     linea=linea.split(",")
@@ -41,7 +39,7 @@ for l in file1:
     incompletos_x[contador1]=l[0]
     contador1=contador1+1
 
-#TODOS LOS CICLOS ANTES DE ESTE COMENTARIO SON PARA ALMACENAR TODOS LOS DATOS NECESARIOS
+#TODOS LOS CICLOS ANTES DE ESTE COMENTARIO SON PARA ALMACENAR TODOS LOS DATOS NECESARIOS DE LOS ARCHIVOS
  
     
     
@@ -52,7 +50,6 @@ def Freq(n, d = 1.0): #FUNCION PARA CALCULAR LAS FRECUENCIAS DE LA TRANSFORMADA
 
 def Fourier(data): #IMPLEMENTACION PROPRIA PARA CALCULAR LA TRANSFORMADA DE FOURIER
     N = len(data)
-    
     n = np.arange(0, N)
     trans = np.zeros(N//2 + 1, dtype=complex)
     for k in range(trans.shape[0]):
@@ -64,36 +61,34 @@ def pasabajos(info, frecuencias, corte): #FUNCION PARA HACER FILTRO PASABAJOS
     filtro[frecuencias > corte] = 0
     return filtro
 
-
-
 plt.plot(sig_x,sig_y,label="Signal") #GRAFICA DE LOS DATOS SIGNAL
 plt.xlabel('X')
 plt.ylabel('Y')
 plt.legend()
-#plt.savefig("CarvajalJuan_signal.pdf")
-plt.show()
+plt.title("Grafica datos siganl.dat")
+plt.savefig("CarvajalJuan_signal.pdf")
 
 
-Transformada_propia=Fourier(sig_y)
-Transformada_paquete= np.fft.rfft(sig_y)
-Frecuencias_propias=Freq(512, d=1.0/17955)    #CALCULO DE TRANSFORMADA
+Transformada_propia=Fourier(sig_y)   #CALCULO DE TRANSFORMADA
+Frecuencias_propias=Freq(512, d=1.0/17955)   
+Transformada_paquete= np.fft.rfft(sig_y) 
 Frecuencias_paquete = np.fft.rfftfreq(512, d=1./17955)
 
-print("NO USE EL PAQUETE DE FRECUENCIAS DE NUMPY")
+print("NO USÉ EL PAQUETE DE FRECUENCIAS DE NUMPY")
 
 plt.plot(Frecuencias_propias,abs(Transformada_propia),label="Transformada Signal")
 plt.xlabel('X')
 plt.ylabel('Y')
-plt.xlim([0,2000])
+plt.xlim([0,2500])
 plt.legend()
-#plt.savefig("CarvajalJuan_TF.pdf")
-plt.show()
+plt.title("Transformada Fourier signal.dat")
+plt.savefig("CarvajalJuan_TF.pdf")
 
-def principales():
+
+def principales(): #FUNCION PARA SACAR LAS FRECUENCIAS PRINCIPALES DE LA TRANSFORMADA
     conta=0
     Principales=np.zeros(4)
     for i in range(len(Frecuencias_propias)):
-        
         if(Transformada_propia[i]>100):
             Principales[conta]=Frecuencias_propias[i]
             conta=conta+1
@@ -110,11 +105,12 @@ plt.plot(sig_x,Inversa_filtro,label="Inversa con filtro")
 plt.xlabel('X')
 plt.ylabel('Y')
 plt.legend()
-plt.grid()
-#plt.savefig("CarvajalJuan_filtrada.pdf")
-plt.show()
+plt.title("Inversa con filtro de 1000 Hz")
+plt.savefig("CarvajalJuan_filtrada.pdf")
 
-print("MENSAJE SOBRE INCOMPLETOS")
+
+print("Si se puede 'hacer' la transformada de fourier de los datos incompletos pero estos nos da valores negativos lo cual carece de significado fisico y no tiene sentido en nuestro mundo")
+
 
 Interpolacion_cubica= interpolate.interp1d(incompletos_x, incompletos_y,kind="cubic")
 
@@ -132,8 +128,7 @@ Fourier_Quad=Fourier(Quad)
 plt.plot(Frecuencias_propias,abs(Transformada_propia),label="T.Signal")
 plt.plot(Frecuencias_propias,abs(Fourier_Cubic),label="T.Cubica")
 plt.plot(Frecuencias_propias,abs(Fourier_Quad),label="T.Cuadratica")
-plt.xlim([0,2000])
-plt.grid()
+plt.xlim([0,2500])
 plt.legend()
 #plt.savefig("CarvajalJuan_TF_interpola.pdf")
 plt.show()
