@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import urllib.request
+
+urllib.request.urlretrieve("http://ftp.cs.wisc.edu/math-prog/cpo-dataset/machine-learn/cancer/WDBC/WDBC.dat", "WDBC.dat")
 
 datos=open("WDBC.dat")
 atos=open("WDBC.dat")
