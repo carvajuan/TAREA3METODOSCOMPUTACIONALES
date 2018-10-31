@@ -31,7 +31,7 @@ for l in atos:     #CICLO QUE RECORRE EL ARCHIVO DE DATOS Y ALMACENA SUS DATOS E
     
     
 datas = np.delete(dat, 0, 1) #ELIMINA LA COLUMNA DE LOS IDS
-
+D=datas.copy()
 for i in range(31): #SE NORMALIZAN LAS COLUMNAS DE LOS DATOS
     datas[:,i]=(datas[:,i]-np.mean(datas[:,i]))/(np.sqrt(np.var(datas[:,i])))
 print(datas) 
@@ -57,4 +57,34 @@ print(covarianza(datas))
 
 for i in range(len(auto_valores)): #SE IMPRIMEN LOS AUTOVALORES Y VECTORES DE LA MATRIZ DE COVARIANZA
     print("El autovalor",auto_valores[i]," tiene asociado el autovector",auto_vectores[:,i])
+
+vector_1=auto_vectores[:,0]
+vector_2=auto_vectores[:,1]  
+print("Los dos autovalores mas importantes son:",auto_valores[0], auto_valores[1],"y los autovectores asociados son", vector_1,vector_2)
+
+PC1=np.dot(datas, vector_1)/np.linalg.norm(vector_1)
+PC2=np.dot(datas, vector_2)/np.linalg.norm(vector_2)
+
+M=[]
+B=[]
+X=[]
+Y=[]
+
+for i in range(len(D[:,0])):
+    
+    if(D[i,0]==1.0):
+        
+        M.append(PC1[i])
+        X.append(PC2[i])
+        
+    else:
+        B.append(PC1[i])
+        Y.append(PC2[i])
+
+    
+plt.figure()
+plt.scatter(X,M, c="red",label="Malignos")
+plt.scatter(Y,B, c="green",label="Benignos")
+plt.legend()
+plt.savefig("CarvajalJuan_PCA.pdf")
 
