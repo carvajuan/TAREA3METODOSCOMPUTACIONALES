@@ -50,9 +50,9 @@ def covarianza(datos):
             matriz[i,j]=(np.sum((datos[:,i]-promedio_i)*(datos[:,j]-promedio_j)))/(cantidad_datos-1.0)
     return matriz
 
-auto_valores,auto_vectores=np.linalg.eig(covarianza(datas)))
+auto_valores,auto_vectores=np.linalg.eig(covarianza(datas))
 
-print("La matriz de covarianza sacada por mi cuenta da")
+print("La matriz de covarianza sacada por mi cuenta da, despues de normalizar las columnas de los datos y quitar la columna de IDS:")
 print(covarianza(datas))
 
 for i in range(len(auto_valores)): #SE IMPRIMEN LOS AUTOVALORES Y VECTORES DE LA MATRIZ DE COVARIANZA
