@@ -19,13 +19,17 @@ for l in atos:     #CICLO QUE RECORRE EL ARCHIVO DE DATOS Y ALMACENA SUS DATOS E
     l=l.split(",")
     for i in range(32):
         if(l[i]=="M"):
-            l[i]=1
-        elif(l[i]=="B"):
-            l[i]=0
+            l[i]=1.0
+        elif(l[i]=="B"):  #ALMACENAR ESTOS DATOS EN BINARIO ME ESTABA DANDO PROBLEMAS ASI QUE DECIDI DARLES ESTOS VALORES
+            l[i]=2.0
         else:
             dat[contador,i]=l[i]
     contador=contador+1
   
+for i in range(len(dat)):    #SE DEBE NORMALIZAR LA MATRIZ PARA PODER HACER EL ANALISIS
+    dat[i]=(dat[i]-np.mean(dat[i]))/(np.sqrt(np.var(dat[i])))
+
+#IMPORTANTE: ACABO DE DARME CUENTA QUE LA PRIMERA COLUMNA SE DEBE ELIMINAR 
 #FUNCION PARA CALCULAR LA MATRIZ DE COVARIANZA 
 def covarianza(datos):
     numero_columnas=np.shape(datos)[1]
