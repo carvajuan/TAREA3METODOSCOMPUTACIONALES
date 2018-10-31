@@ -88,3 +88,4 @@ plt.scatter(Y,B, c="green",label="Benignos")
 plt.legend()
 plt.savefig("CarvajalJuan_PCA.pdf")
 
+print("En este caso el metodo de PCA si es util para analizar y predecir si un tumor es benigno o maligno, sin embargo no es 100% confiable, como se puede ver en la grafica, algunos puntos se sobrelapan lo que significa que en algunas ocaciones ete metodo fallara al identificar la naturaleza del tumor. Pero puedo decir que para un diagnostico temprano este metodo puede ser util")
